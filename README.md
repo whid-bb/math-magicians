@@ -8,11 +8,18 @@ A calculator app with useful quotes
 
 ## Getting Started
 
-To build run in your terminal:
+### Prerequisites
 
-1. `npm i`
-2. `npm run build`
-3. open `index.html` inside `build` directory
+- `nodejs` and `npm` preferably the LTS version
+
+You can install Node and NPM at https://nodejs.org and follow the instructions provided by the installer.
+
+### To build run in your terminal:
+
+1. `git clone git@github.com:whid-bb/math-magicians.git`
+2. `cd math-magicians`
+3. `npm i`
+4. `npm start`
 
 ## Author
 
