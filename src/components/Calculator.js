@@ -1,5 +1,4 @@
-/* eslint-disable max-classes-per-file */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import calculate from './logic/calculate';
 
@@ -136,45 +135,38 @@ TopPan.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-class Calculator extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      total: null,
-      next: null,
-      operation: null,
-    };
-  }
+function Calculator() {
+  const [calcobj, setCalcobj] = useState({
+    total: '0',
+    next: null,
+    operation: null,
+  });
 
-  handleClick(event) {
+  const { total, next, operation } = calcobj;
+
+  const handleClick = (event) => {
     const buttonData = event.target.dataset.func;
-    this.setState((state) => calculate(state, buttonData));
-  }
+    setCalcobj(calculate(calcobj, buttonData));
+  };
 
-  render() {
-    const {
-      total, next, operation,
-    } = this.state;
-
-    return (
-      <div id="calc">
-        <Display number={{ total, next, operation }} />
-        <div className="side-by-side">
-          <div className="calc-column">
-            <TopPan
-              onClick={(e) => this.handleClick(e)}
-            />
-            <NumericKeyboard
-              onClick={(e) => this.handleClick(e)}
-            />
-          </div>
-          <RightPan
-            onClick={(e) => this.handleClick(e)}
+  return (
+    <div id="calc">
+      <Display number={{ total, next, operation }} />
+      <div className="side-by-side">
+        <div className="calc-column">
+          <TopPan
+            onClick={(e) => handleClick(e)}
+          />
+          <NumericKeyboard
+            onClick={(e) => handleClick(e)}
           />
         </div>
+        <RightPan
+          onClick={(e) => handleClick(e)}
+        />
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Calculator;
