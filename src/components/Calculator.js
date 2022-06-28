@@ -1,6 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import React from 'react';
 import PropTypes from 'prop-types';
+import calculate from './logic/calculate';
 
 function NumericKeyboardItem(props) {
   const { itemClass, number, onClick } = props;
@@ -59,14 +60,40 @@ NumericKeyboard.propTypes = {
 };
 
 function Display(props) {
-  const { number } = props;
+  const {
+    number: {
+      total, next, operation,
+    },
+  } = props;
   return (
-    <div className="calc-display">{number}</div>
+    <div className="calc-display">
+      {total}
+      {operation}
+      {next}
+    </div>
   );
 }
 
 Display.propTypes = {
-  number: PropTypes.number.isRequired,
+  number: PropTypes.shape({
+    total: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+    next: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+    operation: PropTypes.string,
+  }),
+};
+
+Display.defaultProps = {
+  number: {
+    total: 0,
+    next: null,
+    operation: '',
+  },
 };
 
 function RightPan(props) {
@@ -79,8 +106,8 @@ function RightPan(props) {
       <div className="row">
         <NumericKeyboardItem onClick={onClick} number="+" />
         <NumericKeyboardItem onClick={onClick} number="-" />
-        <NumericKeyboardItem onClick={onClick} number="*" />
-        <NumericKeyboardItem onClick={onClick} number="/" />
+        <NumericKeyboardItem onClick={onClick} number="x" />
+        <NumericKeyboardItem onClick={onClick} number="÷" />
         <NumericKeyboardItem onClick={onClick} number="=" />
       </div>
     </div>
@@ -113,36 +140,36 @@ class Calculator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      calcDisplay: 0,
+      total: null,
+      next: null,
+      operation: null,
     };
   }
 
-  handleClick() {
-    const { calcDisplay } = this.state;
-    return calcDisplay;
+  handleClick(event) {
+    const buttonData = event.target.dataset.func;
+    this.setState((state) => calculate(state, buttonData));
   }
 
   render() {
     const {
-      numbers, rightButtons, calcDisplay,
+      total, next, operation,
     } = this.state;
 
     return (
       <div id="calc">
-        <Display number={calcDisplay} />
+        <Display number={{ total, next, operation }} />
         <div className="side-by-side">
           <div className="calc-column">
             <TopPan
-              onClick={(event) => this.handleClick(event)}
+              onClick={(e) => this.handleClick(e)}
             />
             <NumericKeyboard
-              onClick={(event) => this.handleClick(event)}
-              calcNumbers={numbers}
+              onClick={(e) => this.handleClick(e)}
             />
           </div>
           <RightPan
-            onClick={(event) => this.handleClick(event)}
-            rightButtons={rightButtons}
+            onClick={(e) => this.handleClick(e)}
           />
         </div>
       </div>
