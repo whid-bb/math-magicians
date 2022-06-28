@@ -1,48 +1,62 @@
+/* eslint-disable max-classes-per-file */
 import React from 'react';
 import PropTypes from 'prop-types';
 
 function NumericKeyboardItem(props) {
-  const { itemClass, number } = props;
+  const { itemClass, number, onClick } = props;
   return (
     <>
-      <button className={itemClass} type="button">{number}</button>
+      <button onClick={onClick} data-func={number} className={itemClass} type="button">{number}</button>
     </>
   );
 }
 
 NumericKeyboardItem.propTypes = {
-  number: PropTypes.string.isRequired,
+  number: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
   itemClass: PropTypes.string,
+  onClick: PropTypes.func,
 };
 NumericKeyboardItem.defaultProps = {
   itemClass: '',
+  onClick: () => 0,
 };
 
-function NumericKeyboard() {
+function NumericKeyboard(props) {
+  const {
+    onClick,
+  } = props;
+
   return (
     <div className="numPad">
       <div className="row">
-        <NumericKeyboardItem number="7" />
-        <NumericKeyboardItem number="8" />
-        <NumericKeyboardItem number="9" />
+        <NumericKeyboardItem onClick={onClick} number="7" />
+        <NumericKeyboardItem onClick={onClick} number="8" />
+        <NumericKeyboardItem onClick={onClick} number="9" />
       </div>
       <div className="row">
-        <NumericKeyboardItem number="4" />
-        <NumericKeyboardItem number="5" />
-        <NumericKeyboardItem number="6" />
+        <NumericKeyboardItem onClick={onClick} number="4" />
+        <NumericKeyboardItem onClick={onClick} number="5" />
+        <NumericKeyboardItem onClick={onClick} number="6" />
       </div>
       <div className="row">
-        <NumericKeyboardItem number="1" />
-        <NumericKeyboardItem number="2" />
-        <NumericKeyboardItem number="3" />
+        <NumericKeyboardItem onClick={onClick} number="1" />
+        <NumericKeyboardItem onClick={onClick} number="2" />
+        <NumericKeyboardItem onClick={onClick} number="3" />
       </div>
       <div className="row">
-        <NumericKeyboardItem itemClass="tworows" number="0" />
-        <NumericKeyboardItem number="." />
+        <NumericKeyboardItem onClick={onClick} itemClass="tworows" number="0" />
+        <NumericKeyboardItem onClick={onClick} number="." />
       </div>
     </div>
   );
 }
+
+NumericKeyboard.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
 
 function Display(props) {
   const { number } = props;
@@ -52,99 +66,86 @@ function Display(props) {
 }
 
 Display.propTypes = {
-  number: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
 };
 
 function RightPan(props) {
   const {
-    rightButtons: {
-      add, sub, multi, div,
-    },
+    onClick,
   } = props;
 
   return (
     <div className="rightPane">
       <div className="row">
-        <NumericKeyboardItem number={add} />
-        <NumericKeyboardItem number={sub} />
-        <NumericKeyboardItem number={multi} />
-        <NumericKeyboardItem number={div} />
+        <NumericKeyboardItem onClick={onClick} number="+" />
+        <NumericKeyboardItem onClick={onClick} number="-" />
+        <NumericKeyboardItem onClick={onClick} number="*" />
+        <NumericKeyboardItem onClick={onClick} number="/" />
+        <NumericKeyboardItem onClick={onClick} number="=" />
       </div>
     </div>
   );
 }
 
 RightPan.propTypes = {
-  rightButtons: PropTypes.shape({
-    add: PropTypes.string.isRequired,
-    sub: PropTypes.string.isRequired,
-    multi: PropTypes.string.isRequired,
-    div: PropTypes.string.isRequired,
-  }),
-};
-
-RightPan.defaultProps = {
-  rightButtons: '',
+  onClick: PropTypes.func.isRequired,
 };
 
 function TopPan(props) {
   const {
-    buttons: {
-      ac, changeSign, percent,
-    },
+    onClick,
   } = props;
 
   return (
     <div className="topPane">
-      <NumericKeyboardItem number={ac} />
-      <NumericKeyboardItem number={changeSign} />
-      <NumericKeyboardItem number={percent} />
+      <NumericKeyboardItem onClick={onClick} number="AC" />
+      <NumericKeyboardItem onClick={onClick} number="+/-" />
+      <NumericKeyboardItem onClick={onClick} number="%" />
     </div>
   );
 }
 
 TopPan.propTypes = {
-  buttons: PropTypes.shape({
-    ac: PropTypes.string.isRequired,
-    changeSign: PropTypes.string.isRequired,
-    percent: PropTypes.string.isRequired,
-  }),
-};
-
-TopPan.defaultProps = {
-  buttons: '',
+  onClick: PropTypes.func.isRequired,
 };
 
 class Calculator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-      topButtons: {
-        ac: 'AC',
-        changeSign: '+/-',
-        percent: '%',
-      },
-      rightButtons: {
-        add: '+',
-        sub: '-',
-        multi: '*',
-        div: '/',
-      },
+      calcDisplay: 0,
     };
   }
 
+  handleClick() {
+    const { calcDisplay } = this.state;
+    return calcDisplay;
+  }
+
   render() {
-    const { numbers, topButtons, rightButtons } = this.state;
+    const {
+      numbers, rightButtons, calcDisplay,
+    } = this.state;
+
     return (
-      <>
-        <Display number="0" />
-        <TopPan buttons={topButtons} />
+      <div id="calc">
+        <Display number={calcDisplay} />
         <div className="side-by-side">
-          <NumericKeyboard numbers={numbers} />
-          <RightPan rightButtons={rightButtons} />
+          <div className="calc-column">
+            <TopPan
+              onClick={(event) => this.handleClick(event)}
+            />
+            <NumericKeyboard
+              onClick={(event) => this.handleClick(event)}
+              calcNumbers={numbers}
+            />
+          </div>
+          <RightPan
+            onClick={(event) => this.handleClick(event)}
+            rightButtons={rightButtons}
+          />
         </div>
-      </>
+      </div>
     );
   }
 }
