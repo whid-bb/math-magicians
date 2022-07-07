@@ -2,6 +2,10 @@
 
 A calculator app with useful quotes
 
+## Live demo
+
+- [Netlify - Math Magicians](https://62c6d9d2e3c14a0e1764e373--the-awesome-whid-bb-site.netlify.app/)
+
 ## Built With
 
 - React
