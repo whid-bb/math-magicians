@@ -12,9 +12,9 @@ const MathMagicians = () => (
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/calculator" element={<CalculatorPage />} />
-        <Route path="/quotes" element={<Quotes />} />
+        <Route path="/math-magicians" element={<Home />} />
+        <Route path="/math-magicians/calculator" element={<CalculatorPage />} />
+        <Route path="/math-magicians/quotes" element={<Quotes />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

@@ -5,17 +5,17 @@ function Navbar() {
   return (
     <nav id={style.mainNav}>
       <div className={style.logo}>
-        <Link to="/"> Math Magicians</Link>
+        <Link to="/math-magicians"> Math Magicians</Link>
       </div>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/math-magicians">Home</Link>
         </li>
         <li>
-          <Link to="/calculator">Calculator</Link>
+          <Link to="/math-magicians/calculator">Calculator</Link>
         </li>
         <li>
-          <Link to="/quotes">Quotes</Link>
+          <Link to="/math-magicians/quotes">Quotes</Link>
         </li>
       </ul>
     </nav>
