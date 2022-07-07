@@ -9,13 +9,13 @@ function Navbar() {
       </div>
       <ul>
         <li>
-          <Link to="/math-magicians">Home</Link>
+          <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/math-magicians/calculator">Calculator</Link>
+          <Link to="/calculator">Calculator</Link>
         </li>
         <li>
-          <Link to="/math-magicians/quotes">Quotes</Link>
+          <Link to="/quotes">Quotes</Link>
         </li>
       </ul>
     </nav>

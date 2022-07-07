@@ -2,7 +2,7 @@
 [build]
   command = "react-scripts build"
   functions = "netlify/functions"
-  publish = "build-netlify"
+  publish = "build"
 
   ## Uncomment to use this redirect for Single Page Applications like create-react-app.
   ## Not needed for static site generators.
