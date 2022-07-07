@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 function Quotes() {
-  const [quote, setQuote] = useState('Just some random quote');
+  const [quote, setQuote] = useState('');
 
   useEffect(() => {
     fetch('https://api.quotable.io/random', {
@@ -16,6 +16,7 @@ function Quotes() {
   return (
     <div className="site-content">
       <section>
+        <h1>Quote of the day</h1>
         <h2>{quote}</h2>
       </section>
     </div>
