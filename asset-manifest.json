@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/math-magicians/static/css/main.fee25fa7.css",
-    "main.js": "/math-magicians/static/js/main.efadced9.js",
-    "index.html": "/math-magicians/index.html",
-    "main.fee25fa7.css.map": "/math-magicians/static/css/main.fee25fa7.css.map",
-    "main.efadced9.js.map": "/math-magicians/static/js/main.efadced9.js.map"
+    "main.css": "/static/css/main.fee25fa7.css",
+    "main.js": "/static/js/main.efadced9.js",
+    "index.html": "/index.html",
+    "main.fee25fa7.css.map": "/static/css/main.fee25fa7.css.map",
+    "main.efadced9.js.map": "/static/js/main.efadced9.js.map"
   },
   "entrypoints": [
     "static/css/main.fee25fa7.css",
